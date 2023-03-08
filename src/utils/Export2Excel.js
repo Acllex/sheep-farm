@@ -161,7 +161,7 @@ export function export_json_to_excel({
         data.unshift(multiHeader[i])
     }
 
-    let ws_name = "SheetJS";
+    let ws_name = "羊只基础数据表";
     let wb = new Workbook(),
         ws = sheet_from_array_of_arrays(data);
 

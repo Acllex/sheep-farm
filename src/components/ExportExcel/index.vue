@@ -1,15 +1,12 @@
 <template>
   <div class="app-container">
     <div>
-      <FilenameOption v-model="filename" />
-      <AutoWidthOption v-model="autoWidth" />
-      <BookTypeOption v-model="bookType" />
-      <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
-        Export Excel
+<!--      <FilenameOption v-model="filename" />-->
+<!--      <AutoWidthOption v-model="autoWidth" />-->
+<!--      <BookTypeOption v-model="bookType" />-->
+      <el-button :loading="downloadLoading" style="margin:0 0 20px 0;" type="primary" @click="handleDownload">
+        导出当前表格
       </el-button>
-<!--      <a href="https://panjiachen.github.io/vue-element-admin-site/feature/component/excel.html" target="_blank" style="margin-left:15px;">-->
-<!--        <el-tag type="info">Documentation</el-tag>-->
-<!--      </a>-->
     </div>
 
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading..." border fit highlight-current-row>
@@ -44,14 +41,11 @@
 </template>
 
 <script>
-import { parseTime } from '@/utils'
-// options components
-import FilenameOption from './components/FilenameOption.vue'
-import AutoWidthOption from './components/AutoWidthOption.vue'
-import BookTypeOption from './components/BookTypeOption.vue'
+import { parseTime } from '@/utils';
+
 export default {
   name: 'ExportExcel',
-  components: { FilenameOption, AutoWidthOption, BookTypeOption },
+  components: { },
   data() {
     return {
       list: null,
@@ -76,7 +70,7 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/utils/Export2Excel').then(excel => {
-        const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
+        const tHeader = ['姓名', '手机号', '入职日期', '聘用形式', '转正日期', '工号', '部门']
         const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
         const list = this.list||[];
         const data = this.formatJson(filterVal, list)
@@ -85,7 +79,9 @@ export default {
           data,
           filename: this.filename,
           autoWidth: this.autoWidth,
-          bookType: this.bookType
+          bookType: this.bookType,
+          multiHeader: [['姓名', '主要信息', '', '', '', '', '部门']],
+          merges: ['A1:A2', 'B1:F1', 'G1:G2']
         })
         this.downloadLoading = false
       })
