@@ -45,14 +45,13 @@ import { parseTime } from '@/utils';
 
 export default {
   name: 'ExportExcel',
-  components: { },
   data() {
     return {
       list: null,
       listLoading: true,
       downloadLoading: false,
-      filename: '',
-      autoWidth: true,
+      filename: '羊只基础数据情况表',
+      autoWidth: false,
       bookType: 'xlsx'
     }
   },
@@ -70,7 +69,7 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/utils/Export2Excel').then(excel => {
-        const tHeader = ['姓名', '手机号', '入职日期', '聘用形式', '转正日期', '工号', '部门']
+        const tHeader = ['序号', '品种', '耳号', '性别','出生日期','同胞数', '胎次', '初生重','父耳号','母耳号','照片','体 重','体 高','体 长','胸 围','备注']
         const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time']
         const list = this.list||[];
         const data = this.formatJson(filterVal, list)
@@ -80,8 +79,8 @@ export default {
           filename: this.filename,
           autoWidth: this.autoWidth,
           bookType: this.bookType,
-          multiHeader: [['姓名', '主要信息', '', '', '', '', '部门']],
-          merges: ['A1:A2', 'B1:F1', 'G1:G2']
+          multiHeader: [['羊只基础数据情况表','','','','','','','','','','','','','','','',],['','','','','','','','','','','','','单位：只、公斤、厘米','','','',],['序号', '品种', '耳号', '性别','出生日期','同胞数', '胎次', '初生重','父耳号','母耳号','照片','断奶','','','','备注']],
+          merges: ['A1:P1','M2:P2','A3:A4','B3:B4','C3:C4','D3:D4','E3:E4','F3:F4','G3:G4','H3:H4','I3:I4','J3:J4','K3:K4','L3:O3','P3:P4' ]
         })
         this.downloadLoading = false
       })

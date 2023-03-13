@@ -153,7 +153,7 @@ export function export_json_to_excel({
                                          bookType = 'xlsx'
                                      } = {}) {
     /* original data */
-    filename = filename || 'excel-list'
+    filename = filename || '羊只基础数据情况表'
     data = [...data]
     data.unshift(header);
 
@@ -161,7 +161,7 @@ export function export_json_to_excel({
         data.unshift(multiHeader[i])
     }
 
-    let ws_name = "羊只基础数据表";
+    let ws_name = "羊只基础数据情况表";
     let wb = new Workbook(),
         ws = sheet_from_array_of_arrays(data);
 
