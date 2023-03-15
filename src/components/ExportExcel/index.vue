@@ -51,7 +51,7 @@ export default {
       listLoading: true,
       downloadLoading: false,
       filename: '羊只基础数据情况表',
-      autoWidth: false,
+      autoWidth: true,
       bookType: 'xlsx'
     }
   },

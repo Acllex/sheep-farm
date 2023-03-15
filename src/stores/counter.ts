@@ -9,4 +9,6 @@ export const useCounterStore = defineStore('counter', () => {
   }
 
   return { excelList, increment }
+}, {
+  persist: true,
 })

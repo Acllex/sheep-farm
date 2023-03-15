@@ -2,6 +2,7 @@
 import UploadExcel from '@/components/UploadExcel.vue'
 import { useCounterStore } from '@/stores/counter'
 import { export_json_to_excel } from '@/utils/Export2Excel.js'
+import router from '@/router'
 
 const store = useCounterStore()
 
@@ -34,6 +35,7 @@ const onSuccess = ({ results }: any) => {
     }
     console.log(tableArr, 'tableArr')
     store.increment(tableArr)
+    router.push('/excel-list')
   }
 }
 </script>
