@@ -1,10 +1,11 @@
 <script setup lang='ts'>
 import { useCounterStore } from '@/stores/counter'
 import { reactive } from 'vue'
+import router from '@/router'
 
 const store = useCounterStore()
 const exportObj = reactive({ downloadLoading: false })
-const formatJson = (filterVal, jsonData) => {
+const formatJson = (filterVal:any, jsonData:any) => {
   return jsonData.map(v => filterVal.map(j => {
     return v[j]
   }))
@@ -27,8 +28,8 @@ const handleDownload = () => {
   })
 }
 
-const handleRead = (index, row)=>{
-  console.log(index, row)
+const handleRead = (index:number, row:any)=>{
+  router.push({name: 'sheepDetails', query:{index}})
 }
 </script>
 

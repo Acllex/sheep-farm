@@ -13,6 +13,11 @@ const router = createRouter({
       path: '/excel-list',
       name: 'excelList',
       component: ()=>import('../views/ExcelList.vue')
+    },
+    {
+      path: '/sheep-details',
+      name: 'sheepDetails',
+      component: ()=>import('../views/SheepDetails.vue')
     }
   ]
 })

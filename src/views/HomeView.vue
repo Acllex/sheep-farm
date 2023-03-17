@@ -33,7 +33,6 @@ const onSuccess = ({ results }: any) => {
       })
       tableArr.push(tableObj)
     }
-    console.log(tableArr, 'tableArr')
     store.increment(tableArr)
     router.push('/excel-list')
   }

@@ -29,6 +29,7 @@ declare module '@vue/runtime-core' {
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TooltipHtml: typeof import('./src/components/TooltipHtml.vue')['default']
     UploadExcel: typeof import('./src/components/UploadExcel.vue')['default']
   }
   export interface ComponentCustomProperties {
