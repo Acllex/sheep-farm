@@ -29,7 +29,8 @@ const handleDownload = () => {
 }
 
 const handleRead = (index:number, row:any)=>{
-  router.push({name: 'sheepDetails', query:{index}})
+  const href = router.resolve({name: 'sheepDetails', query:{index}})
+  window.open(href.href, '_blank')
 }
 </script>
 
