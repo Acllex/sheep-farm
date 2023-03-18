@@ -12,14 +12,8 @@ declare module '@vue/runtime-core' {
     AutoWidthOption: typeof import('./src/components/ExportExcel/components/AutoWidthOption.vue')['default']
     BookTypeOption: typeof import('./src/components/ExportExcel/components/BookTypeOption.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElInput: typeof import('element-plus/es')['ElInput']
-    ElOption: typeof import('element-plus/es')['ElOption']
-    ElRadio: typeof import('element-plus/es')['ElRadio']
-    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
-    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
-    ElTag: typeof import('element-plus/es')['ElTag']
     ExportExcel: typeof import('./src/components/ExportExcel/index.vue')['default']
     FilenameOption: typeof import('./src/components/ExportExcel/components/FilenameOption.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
@@ -31,8 +25,5 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     TooltipHtml: typeof import('./src/components/TooltipHtml.vue')['default']
     UploadExcel: typeof import('./src/components/UploadExcel.vue')['default']
-  }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
