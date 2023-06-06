@@ -1,22 +1,44 @@
 <template>
   <div>
-    <input ref="excel-upload-input" class="excel-upload-input" type="file" accept=".xlsx, .xls" @change="handleClick">
+    <input
+      ref="excel-upload-input"
+      class="excel-upload-input"
+      type="file"
+      accept=".xlsx, .xls"
+      @change="handleClick"
+    />
     <div class="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
       把EXCEL文件拖拽到这里 或者
-      <el-button :loading="loading" style="margin-left:16px;cursor: pointer" size="mini" type="primary" @click="handleUpload">
-        点击上传
+      <el-button
+        :loading="loading"
+        style="margin-left: 16px; cursor: pointer"
+        size="mini"
+        type="primary"
+        @click="handleUpload"
+      >
+        点击上传羊只基础数据情况表
+      </el-button>
+      <el-button
+        :loading="loading"
+        style="margin-left: 16px; cursor: pointer"
+        size="mini"
+        type="primary"
+        @click="handleUpload"
+      >
+        点击上传羊只数据文档汇总
       </el-button>
     </div>
   </div>
 </template>
 
 <script>
-import {read, utils} from 'xlsx'
+import { read, utils } from 'xlsx'
 
 export default {
   props: {
     beforeUpload: Function, // eslint-disable-line
-    onSuccess: Function// eslint-disable-line
+    onSuccess: Function, // eslint-disable-line
+    onDetail: Function
   },
   data() {
     return {
@@ -24,7 +46,8 @@ export default {
       excelData: {
         header: null,
         results: null
-      }
+      },
+      detailData: []
     }
   },
   methods: {
@@ -68,7 +91,6 @@ export default {
     },
     upload(rawFile) {
       this.$refs['excel-upload-input'].value = null // fix can't select the same excel
-
       if (!this.beforeUpload) {
         this.readerData(rawFile)
         return
@@ -82,14 +104,24 @@ export default {
       this.loading = true
       return new Promise((resolve, reject) => {
         const reader = new FileReader()
-        reader.onload = e => {
+        reader.onload = (e) => {
           const data = e.target.result
           const workbook = read(data, { type: 'array' })
-          const firstSheetName = workbook.SheetNames[0]
-          const worksheet = workbook.Sheets[firstSheetName]
-          const header = this.getHeaderRow(worksheet)
-          const results = utils.sheet_to_json(worksheet)
-          this.generateData({ header, results })
+          if (workbook.SheetNames.length > 1) {
+            workbook.SheetNames.forEach((sheetName) => {
+              const worksheet = workbook.Sheets[sheetName]
+              const header = sheetName
+              const results = utils.sheet_to_json(worksheet)
+              this.detailData.push({ header, results })
+            })
+            this.onDetail(this.detailData)
+          } else {
+            const firstSheetName = workbook.SheetNames[0]
+            const worksheet = workbook.Sheets[firstSheetName]
+            const header = this.getHeaderRow(worksheet)
+            const results = utils.sheet_to_json(worksheet)
+            this.generateData({ header, results })
+          }
           this.loading = false
           resolve()
         }
@@ -102,7 +134,8 @@ export default {
       let C
       const R = range.s.r
       /* start in the first row */
-      for (C = range.s.c; C <= range.e.c; ++C) { /* walk every column in the range */
+      for (C = range.s.c; C <= range.e.c; ++C) {
+        /* walk every column in the range */
         const cell = sheet[utils.encode_cell({ c: C, r: R })]
         /* find the cell in the first row */
         let hdr = 'UNKNOWN ' + C // <-- replace with your desired default
@@ -119,11 +152,11 @@ export default {
 </script>
 
 <style scoped>
-.excel-upload-input{
+.excel-upload-input {
   display: none;
   z-index: -9999;
 }
-.drop{
+.drop {
   border: 2px dashed #bbb;
   width: 600px;
   height: 160px;
