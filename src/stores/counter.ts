@@ -5,7 +5,7 @@ export const useCounterStore = defineStore(
   'counter',
   () => {
     const excelList = ref([])
-    const detailList = ref([])
+    const detailList = ref(null) as any
     // const doubleCount = computed(() => count.value * 2)
     function increment(value: any) {
       excelList.value = value

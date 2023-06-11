@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { useCounterStore } from '@/stores/counter'
 const store = useCounterStore()
@@ -11,8 +11,9 @@ echarts.use([TooltipComponent, TreeChart, CanvasRenderer])
 import { ref, watch } from 'vue'
 
 const route = useRoute()
-const { index } = route.query
-const tableValue = ref(store.excelList[Number(index)])
+const { id } = route.query
+
+const tableValue = ref(store.excelList.find((item) => item['耳号'] === Number(id)))
 const chart = ref(null)
 
 watch(chart, (n) => {
@@ -43,7 +44,11 @@ const arrayToTree = (data: any, fid: string, mid: string) => {
 
 const drawTree = (n: any) => {
   const myChart = echarts.init(n)
-  const treeData = arrayToTree(store.excelList, tableValue.value['父耳号'], tableValue.value['母耳号'])
+  const treeData = arrayToTree(
+    store.excelList,
+    tableValue.value['父耳号'],
+    tableValue.value['母耳号']
+  )
   console.log(treeData, 'treeData')
 
   let option
@@ -67,7 +72,7 @@ const drawTree = (n: any) => {
           symbolSize: 7,
           tooltip: {
             formatter: (param: any) => {
-              const {data} = param;
+              const { data } = param
               return `耳号：${data['耳号']}<br/>品种：${data['品种']}<br/>性别：${data['性别']}<br/>出生日期：${data['出生日期']}<br/>同胞数：${data['同胞数']}<br/>胎次：${data['胎次']}<br/>初生重：${data['初生重']}`
             }
           },
@@ -102,25 +107,23 @@ const drawTree = (n: any) => {
     })
   )
 }
-
-
 </script>
 
 <template>
-  <div class='body'>
+  <div class="body">
     <main>
       <header>
         <h1>种羊系谱</h1>
       </header>
       <section>
-        <div class='table'>
-          <div class='table-head'>
-            <div class='left-head'>基本情况</div>
+        <div class="table">
+          <div class="table-head">
+            <div class="left-head">基本情况</div>
             <div>种羊照片</div>
           </div>
-          <div class='table-main'>
-            <div class='main-left'>
-              <div class='left-top'>
+          <div class="table-main">
+            <div class="main-left">
+              <div class="left-top">
                 <div>品种</div>
                 <div>{{ tableValue['品种'] }}</div>
                 <div>耳标号</div>
@@ -138,38 +141,37 @@ const drawTree = (n: any) => {
                 <div>备注</div>
                 <div>{{ tableValue['备注'] }}</div>
               </div>
-              <div class='left-button'>
+              <div class="left-button">
                 <div>断奶</div>
                 <div>
-                  <div class='button-info'>
+                  <div class="button-info">
                     <div>体重</div>
                     <div>{{ tableValue['体 重'] }}</div>
                   </div>
-                  <div class='button-info'>
+                  <div class="button-info">
                     <div>体高</div>
                     <div>{{ tableValue['体 高'] }}</div>
                   </div>
-                  <div class='button-info'>
+                  <div class="button-info">
                     <div>体长</div>
                     <div>{{ tableValue['体 长'] }}</div>
                   </div>
-                  <div class='button-info'>
+                  <div class="button-info">
                     <div>胸围</div>
                     <div>{{ tableValue['胸 围'] }}</div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class='main-right'>
-            </div>
+            <div class="main-right"></div>
           </div>
-          <div class='table-tree'>
-            <div id='echarts' ref='chart'></div>
+          <div class="table-tree">
+            <div id="echarts" ref="chart"></div>
           </div>
         </div>
       </section>
-      <div class='end'>
-        <div class='end-info'>
+      <div class="end">
+        <div class="end-info">
           <div>记录：</div>
           <div>技术负责人签字：</div>
         </div>
@@ -300,17 +302,17 @@ section {
   width: 100%;
   height: 100%;
 }
-.end{
+.end {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.end-info{
+.end-info {
   width: 90%;
   display: flex;
   margin-top: 20px;
 }
-.end-info>div{
+.end-info > div {
   width: 50%;
   font-size: 20px;
   padding-left: 80px;

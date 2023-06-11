@@ -93,7 +93,7 @@ const onSuccess = ({ results }: any) => {
 }
 const onDetail = (data: any) => {
   if (data.length === 0) return
-  const detailArr:any = []
+  const detailObj: any = {}
   data.forEach((item: { header?: any; results?: any }) => {
     const { header, results } = item
     const tableArr = []
@@ -114,15 +114,15 @@ const onDetail = (data: any) => {
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
           tableArr.push(
             Object.values(tableObj)
-              .slice(5, 10)
+              .slice(5)
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
         }
         break
@@ -130,27 +130,30 @@ const onDetail = (data: any) => {
         for (let i = 2; i < results.length; i++) {
           const tableObj: any = {}
           const item = results[i]
-          Object.keys(results[1]).forEach((key, index) => {
+
+          Object.keys(results[1]).forEach((key) => {
             if (Object.keys(item).indexOf(key) === -1) {
               item[key] = '--'
             }
+
             tableObj[key] = { name: results[1][key], value: item[key] }
           })
+
           tableArr.push(
             Object.values(tableObj)
               .slice(0, 5)
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
           tableArr.push(
             Object.values(tableObj)
-              .slice(5, 10)
+              .slice(5)
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
         }
         break
@@ -176,7 +179,7 @@ const onDetail = (data: any) => {
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
           tableArr.push(
             Object.values(tableObj)
@@ -184,7 +187,7 @@ const onDetail = (data: any) => {
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
         }
         break
@@ -202,7 +205,7 @@ const onDetail = (data: any) => {
             Object.values(tableObj).reduce((acc: any, curr: any) => {
               acc[curr.name] = curr.value
               return acc
-            })
+            }, {})
           )
         }
         break
@@ -222,7 +225,7 @@ const onDetail = (data: any) => {
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
           tableArr.push(
             Object.values(tableObj)
@@ -230,7 +233,7 @@ const onDetail = (data: any) => {
               .reduce((acc: any, curr: any) => {
                 acc[curr.name] = curr.value
                 return acc
-              })
+              }, {})
           )
         }
         break
@@ -248,7 +251,7 @@ const onDetail = (data: any) => {
             Object.values(tableObj).reduce((acc: any, curr: any) => {
               acc[curr.name] = curr.value
               return acc
-            })
+            }, {})
           )
         }
         break
@@ -266,7 +269,7 @@ const onDetail = (data: any) => {
             Object.values(tableObj).reduce((acc: any, curr: any) => {
               acc[curr.name] = curr.value
               return acc
-            })
+            }, {})
           )
         }
         break
@@ -284,7 +287,7 @@ const onDetail = (data: any) => {
             Object.values(tableObj).reduce((acc: any, curr: any) => {
               acc[curr.name] = curr.value
               return acc
-            })
+            }, {})
           )
         }
         break
@@ -302,25 +305,27 @@ const onDetail = (data: any) => {
             Object.values(tableObj).reduce((acc: any, curr: any) => {
               acc[curr.name] = curr.value
               return acc
-            })
+            }, {})
           )
         }
         break
       default:
         break
     }
-    detailArr.push(tableArr)
+    detailObj[header] = tableArr
   })
-  console.log(detailArr,'detailArr')
-  store.setDetail(detailArr);
+  console.log(detailObj, 'detailObj')
+  store.setDetail(detailObj)
 }
 const goToList = () => {
-  if (store.detailList.length === 0 || store.excelList.length === 0) return
+  console.log(store.detailList, store.excelList.length)
+
+  if (!store.detailList || store.excelList.length === 0) return
 
   router.push('/excel-list')
 }
 const isToList = computed(() => {
-  return store.detailList.length > 0 && store.excelList.length > 0 ? false : true
+  return store.detailList && store.excelList.length > 0 ? false : true
 })
 </script>
 
