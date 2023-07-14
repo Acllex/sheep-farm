@@ -3,10 +3,13 @@ import UploadExcel from '@/components/UploadExcel.vue'
 import { useCounterStore } from '@/stores/counter'
 import { export_json_to_excel } from '@/utils/Export2Excel.js'
 import router from '@/router'
+import { downFileIframe } from '@/utils/index'
 import { computed } from 'vue'
 const store = useCounterStore()
 
 const onDownload = () => {
+  downFileIframe('/sheep-farm/favicon.ico')
+  // window.open('/sheep-farm/favicon.ico', '_self')
   const tHeader = [
     '序号',
     '品种',
@@ -25,52 +28,52 @@ const onDownload = () => {
     '胸 围',
     '备注'
   ]
-  export_json_to_excel({
-    header: tHeader,
-    data: [],
-    filename: '羊只基础数据情况表',
-    autoWidth: false,
-    bookType: 'xlsx',
-    multiHeader: [
-      ['羊只基础数据情况表', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-      ['', '', '', '', '', '', '', '', '', '', '', '', '单位：只、公斤、厘米', '', '', ''],
-      [
-        '序号',
-        '品种',
-        '耳号',
-        '性别',
-        '出生日期',
-        '同胞数',
-        '胎次',
-        '初生重',
-        '父耳号',
-        '母耳号',
-        '照片',
-        '断奶',
-        '',
-        '',
-        '',
-        '备注'
-      ]
-    ] as any,
-    merges: [
-      'A1:P1',
-      'M2:P2',
-      'A3:A4',
-      'B3:B4',
-      'C3:C4',
-      'D3:D4',
-      'E3:E4',
-      'F3:F4',
-      'G3:G4',
-      'H3:H4',
-      'I3:I4',
-      'J3:J4',
-      'K3:K4',
-      'L3:O3',
-      'P3:P4'
-    ] as any
-  })
+  // export_json_to_excel({
+  //   header: tHeader,
+  //   data: [],
+  //   filename: '羊只基础数据情况表',
+  //   autoWidth: false,
+  //   bookType: 'xlsx',
+  //   multiHeader: [
+  //     ['羊只基础数据情况表', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+  //     ['', '', '', '', '', '', '', '', '', '', '', '', '单位：只、公斤、厘米', '', '', ''],
+  //     [
+  //       '序号',
+  //       '品种',
+  //       '耳号',
+  //       '性别',
+  //       '出生日期',
+  //       '同胞数',
+  //       '胎次',
+  //       '初生重',
+  //       '父耳号',
+  //       '母耳号',
+  //       '照片',
+  //       '断奶',
+  //       '',
+  //       '',
+  //       '',
+  //       '备注'
+  //     ]
+  //   ] as any,
+  //   merges: [
+  //     'A1:P1',
+  //     'M2:P2',
+  //     'A3:A4',
+  //     'B3:B4',
+  //     'C3:C4',
+  //     'D3:D4',
+  //     'E3:E4',
+  //     'F3:F4',
+  //     'G3:G4',
+  //     'H3:H4',
+  //     'I3:I4',
+  //     'J3:J4',
+  //     'K3:K4',
+  //     'L3:O3',
+  //     'P3:P4'
+  //   ] as any
+  // })
 }
 
 const onSuccess = ({ results }: any) => {
